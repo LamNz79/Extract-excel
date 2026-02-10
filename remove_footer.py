@@ -3,6 +3,7 @@ import re
 import pandas as pd
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+INPUT_DIR = os.path.join(BASE_DIR, "input")
 OUT_DIR = os.path.join(BASE_DIR, "_sanitized")
 MAX_FOOTER_SCAN_ROWS = 20
 
@@ -120,18 +121,24 @@ def clean_excel_file(src_path, dst_path):
 # PROCESS ALL FILES
 # =========================
 def process_all_files():
-    for root, _, files in os.walk(BASE_DIR):
-        if root.startswith(OUT_DIR):
-            continue
-
+    # Tạo thư mục input nếu chưa có
+    if not os.path.exists(INPUT_DIR):
+        os.makedirs(INPUT_DIR)
+        print(f"📁 Đã tạo thư mục: {INPUT_DIR}")
+        print(f"⚠️  Vui lòng copy file Excel cần xử lý vào thư mục 'input'")
+        return
+    
+    # Quét file trong thư mục input
+    file_count = 0
+    for root, _, files in os.walk(INPUT_DIR):
         for file in files:
             if not file.lower().endswith((".xlsx", ".xls", ".ods")):
                 continue
-            if file.startswith("output"):
+            if file.startswith("output") or file.startswith("~$"):
                 continue
 
             src = os.path.join(root, file)
-            rel = os.path.relpath(src, BASE_DIR)
+            rel = os.path.relpath(src, INPUT_DIR)
 
             # 🔑 ALWAYS WRITE XLSX
             base_name = os.path.splitext(rel)[0]
@@ -139,6 +146,12 @@ def process_all_files():
 
             print(f"🧹 Sanitizing: {rel}")
             clean_excel_file(src, dst)
+            file_count += 1
+    
+    if file_count == 0:
+        print(f"⚠️  Không tìm thấy file Excel nào trong thư mục 'input'")
+    else:
+        print(f"\n📊 Đã xử lý: {file_count} file")
 
 
 if __name__ == "__main__":

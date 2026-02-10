@@ -11,6 +11,7 @@ warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
 # BASE PATH
 # =========================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+INPUT_DIR = os.path.join(BASE_DIR, "input")
 SANITIZED_DIR = os.path.join(BASE_DIR, "_sanitized")
 
 # =========================
