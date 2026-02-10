@@ -47,7 +47,7 @@ def check_files_in_folders():
     # --- IN BÁO CÁO TỔNG KẾT ---
     print(f"📂 Thư mục quét: {BASE_DIR}")
     print("-" * 50)
-    print(f"📊 TỔNG HỢP:")
+    print("📊 TỔNG HỢP:")
     print(f"✅ Excel tìm thấy: {len(excel_files)} file")
     print(f"📝 Word tìm thấy : {len(word_files)} file")
     print(f"❓ Định dạng khác: {len(ignored_items)} file")
