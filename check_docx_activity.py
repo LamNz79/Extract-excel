@@ -2,12 +2,13 @@ import os
 
 # Đường dẫn đến thư mục chứa dữ liệu
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+INPUT_DIR = os.path.join(BASE_DIR, "input")
 SANITIZED_DIR = os.path.join(BASE_DIR, "_sanitized")
 
 
 def check_files_in_folders():
-    if not os.path.exists(BASE_DIR):
-        print(f"❌ Không tìm thấy thư mục: {BASE_DIR}")
+    if not os.path.exists(INPUT_DIR):
+        print(f"❌ Không tìm thấy thư mục: {INPUT_DIR}")
         return
 
     excel_files = []
@@ -15,7 +16,7 @@ def check_files_in_folders():
     ignored_items = []
 
     # Duyệt đệ quy trong thư mục _sanitized
-    for root, dirs, files in os.walk(BASE_DIR):
+    for root, dirs, files in os.walk(INPUT_DIR):
         # 1. Loại bỏ các thư mục ẩn và venv ngay lập tức
         dirs[:] = [
             d
@@ -33,7 +34,7 @@ def check_files_in_folders():
                 continue
 
             path = os.path.join(root, file)
-            rel_path = os.path.relpath(path, BASE_DIR)
+            rel_path = os.path.relpath(path, INPUT_DIR)
             file_lower = file.lower()
 
             # 3. Phân loại dựa trên đuôi file
@@ -45,7 +46,7 @@ def check_files_in_folders():
                 ignored_items.append(rel_path)
 
     # --- IN BÁO CÁO TỔNG KẾT ---
-    print(f"📂 Thư mục quét: {BASE_DIR}")
+    print(f"📂 Thư mục quét: {INPUT_DIR}")
     print("-" * 50)
     print("📊 TỔNG HỢP:")
     print(f"✅ Excel tìm thấy: {len(excel_files)} file")
