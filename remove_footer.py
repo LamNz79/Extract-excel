@@ -50,9 +50,17 @@ def looks_like_footer_row(row_text):
         return True
     if len(text.split()) <= 4:
         return True
-    if re.search(r"\b(TM\.|BCH|Chủ tịch|Phó)\b", text, re.IGNORECASE):
+    
+    # Check for leadership/signature keywords
+    if re.search(r"\b(TM\.|BCH|Chủ tịch|Phó|LÃNH ĐẠO|NGƯỜI LẬP|NGƯỜI SOẠN|TRƯỞNG KHOA|TRƯỞNG PHÒNG)\b", text, re.IGNORECASE):
         return True
-    if re.fullmatch(r"([A-ZĐ][a-zà-ỹ]+[\s]*){2,4}", text):
+    
+    # Check for academic titles (TS., ThS., GS., PGS.)
+    if re.search(r"\b(TS\.|ThS\.|GS\.|PGS\.|CN\.|KS\.)\s*[A-ZĐ]", text):
+        return True
+    
+    # Names with 2-8 words (allowing multiple names in one row)
+    if re.fullmatch(r"([A-ZĐ][a-zà-ỹ]+[\s]*){2,8}", text):
         return True
 
     return False

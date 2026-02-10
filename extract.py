@@ -173,11 +173,18 @@ for root, dirs, files in os.walk(SANITIZED_DIR):
                     "so_diem": act.get("so_diem"),
                     "don_vi": act.get("don_vi"),
                     "needs_review": False,
+                    "review_reason": None,
                 }
 
+                # Check for missing fields
+                missing_fields = []
                 for k in ["ten_hoat_dong", "muc_cong_diem", "so_diem", "don_vi"]:
                     if not row[k]:
-                        row["needs_review"] = True
+                        missing_fields.append(k)
+                
+                if missing_fields:
+                    row["needs_review"] = True
+                    row["review_reason"] = f"Thiếu: {', '.join(missing_fields)}"
 
                 records.append(row)
 
@@ -192,7 +199,7 @@ for root, dirs, files in os.walk(SANITIZED_DIR):
                     "so_diem": None,
                     "don_vi": None,
                     "needs_review": True,
-                    "error": str(e),
+                    "review_reason": f"Lỗi xử lý file: {str(e)}",
                 }
             )
 
