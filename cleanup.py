@@ -50,13 +50,15 @@ df["cleanup_reason"] = None
 
 for idx, row in df.iterrows():
     issues = []
-    
+
     if pd.notna(row["muc_cong_diem_original"]) and pd.isna(row["muc_cong_diem"]):
-        issues.append(f"Không parse được mục cộng điểm: '{row['muc_cong_diem_original']}'")
-    
+        issues.append(
+            f"Không parse được mục cộng điểm: '{row['muc_cong_diem_original']}'"
+        )
+
     if pd.notna(row["so_diem_original"]) and pd.isna(row["so_diem"]):
         issues.append(f"Không parse được số điểm: '{row['so_diem_original']}'")
-    
+
     if issues:
         df.at[idx, "cleanup_issue"] = True
         df.at[idx, "cleanup_reason"] = "; ".join(issues)
