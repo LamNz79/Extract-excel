@@ -6,8 +6,8 @@ import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-INPUT_DIR = os.path.join(BASE_DIR, "input")
-
+INPUT_DIR = os.path.join(BASE_DIR, "input//UPLOAD PM//ĐOÀN TN (OK)")
+print(INPUT_DIR)
 KEY_PHRASE = "tên hoạt động:"
 
 
