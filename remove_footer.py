@@ -52,6 +52,10 @@ def looks_like_footer_row(row_text):
     if len(text.split()) <= 4:
         return True
     
+    # Check for approval/signature phrases
+    if re.search(r"\b(Xác nhận|Phê duyệt|Duyệt|Ký duyệt|Đã xét|Xét duyệt)\b", text, re.IGNORECASE):
+        return True
+    
     # Check for leadership/signature keywords
     if re.search(r"\b(TM\.|BCH|Chủ tịch|Phó|LÃNH ĐẠO|NGƯỜI LẬP|NGƯỜI SOẠN|TRƯỞNG KHOA|TRƯỞNG PHÒNG)\b", text, re.IGNORECASE):
         return True
